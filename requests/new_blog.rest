@@ -2,8 +2,8 @@ POST http://localhost:3003/api/blogs
 Content-Type: application/json
 
 {
-  "title": "Nettisensuuri",
-  "author": "Junes Lokka",
+  "title": "Seuraava presidentti",
+  "author": "Paavo Väyrynen",
   "url": "http://www.blogi.com/toka",
   "likes": 3
 }
