@@ -72,6 +72,65 @@ describe('POST /api/blogs', async () => {
     expect(response.body.length).toBe(initialBlogs.length + 1)
     expect(titles).toContain('New Blog')
   })
+
+  test('a blog without likes set is added with 0 likes', async () => {
+    const newBlogWithoutLikes = {
+      title: 'New Blog without likes',
+      author: 'Edsger W. Dijkstra',
+      url: 'http://www.cs.utexas.edu/~EWD/transcriptions/EWD08xx/EWD808.html'
+    }
+
+    await api
+      .post('/api/blogs')
+      .send(newBlogWithoutLikes)
+      .expect(201)
+      .expect('Content-Type', /application\/json/)
+
+    const response = await api.get('/api/blogs')
+
+    const addedBlog = response.body.find(blog => blog.title === 'New Blog without likes')
+
+    expect(addedBlog).not.toBeUndefined()
+    expect(addedBlog.likes).toBe(0)
+  })
+
+  test('a blog without title is not added', async () => {
+    const newBlog = {
+      author: 'Edsger W. Dijkstra',
+      url: 'http://www.u.arizona.edu/~rubinson/copyright_violations/Go_To_Considered_Harmful.html',
+      likes: 5
+    }
+
+    const blogsBefore = await api.get('/api/blogs')
+
+    await api
+      .post('/api/blogs')
+      .send(newBlog)
+      .expect(400)
+
+    const blogsAfter = await api.get('/api/blogs')
+
+    expect(blogsAfter.body.length).toBe(blogsBefore.body.length)
+  })
+
+  test('a blog without url is not added', async () => {
+    const newBlog = {
+      title: 'Testi 1',
+      author: 'Edsger W. Dijkstra',
+      likes: 5
+    }
+
+    const blogsBefore = await api.get('/api/blogs')
+
+    await api
+      .post('/api/blogs')
+      .send(newBlog)
+      .expect(400)
+
+    const blogsAfter = await api.get('/api/blogs')
+
+    expect(blogsAfter.body.length).toBe(blogsBefore.body.length)
+  })
 })
 
 afterAll(() => {

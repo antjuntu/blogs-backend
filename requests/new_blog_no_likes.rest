@@ -2,8 +2,7 @@ POST http://localhost:3003/api/blogs
 Content-Type: application/json
 
 {
-  "title": "Pohjantähden pomo",
+  "title": "Kekkosen oppipoika",
   "author": "Paavo Väyrynen",
-  "url": "http://www.blogi.com/toka",
-  "likes": 3
+  "url": "http://www.blogi.com/toka"
 }
