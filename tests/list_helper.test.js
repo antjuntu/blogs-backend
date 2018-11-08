@@ -1,7 +1,7 @@
 const blogs = require('./blogs')
 const listHelper = require('../utils/list_helper')
 
-describe('total likes', () => {
+describe.skip('total likes', () => {
 
   test('when list has only one blog equals the likes of that', () => {
     const listWithOneBlog = []
@@ -21,7 +21,7 @@ describe('total likes', () => {
   })
 })
 
-describe('favorite blog', () => {
+describe.skip('favorite blog', () => {
   test('when list is empty returns undefined', () => {
     const result = listHelper.favoriteBlog([])
     expect(result).toBeUndefined()
@@ -48,7 +48,7 @@ describe('favorite blog', () => {
   })
 })
 
-describe('most blogs', () => {
+describe.skip('most blogs', () => {
   test('when list is empty return undefined', () => {
     const result = listHelper.mostBlogs([])
     expect(result).toBeUndefined()
@@ -73,7 +73,7 @@ describe('most blogs', () => {
   })
 })
 
-describe('most likes', () => {
+describe.skip('most likes', () => {
   test('when list is empty returns undefined', () => {
     const result = listHelper.mostLikes([])
     expect(result).toBeUndefined()
