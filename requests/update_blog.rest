@@ -1,0 +1,9 @@
+PUT http://localhost:3003/api/blogs/5be1a161aacb6a09cc6b9b65
+Content-Type: application/json
+
+{
+  "title": "Blogin otsikko",
+  "author": "Antti Juntunen",
+  "url": "http://www.blogi.com/eka",
+  "likes": 2009
+}
