@@ -2,7 +2,7 @@ const supertest = require('supertest')
 const { app, server } = require('../index')
 const api = supertest(app)
 const Blog = require('../models/blog')
-const { initialBlogs, nonExistingId, blogsInDb } = require('./test_helper')
+const { initialBlogs, blogsInDb } = require('./test_helper')
 
 
 describe('when there is initially some blogs saved', async () => {
@@ -78,7 +78,7 @@ describe('when there is initially some blogs saved', async () => {
       expect(blogsAfterOperation.length).toBe(blogsAtStart.length + 1)
       expect(addedBlog).not.toBeUndefined()
       expect(addedBlog.likes).toBe(0)
-      
+
     })
 
     test('a blog without title is not added', async () => {
@@ -117,6 +117,35 @@ describe('when there is initially some blogs saved', async () => {
       const blogsAfterOperation = await blogsInDb()
 
       expect(blogsAfterOperation.length).toBe(blogsAtStart.length)
+    })
+  })
+
+  describe('DELETE /api/blogs/:id', async () => {
+    let addedBlog = null
+
+    beforeAll(async () => {
+      addedBlog = new Blog({
+        title: 'delete',
+        author: 'Edsger W. Dijkstra',
+        url: 'http://www.u.arizona.edu/~rubinson/copyright_violations/Go_To_Considered_Harmful.html',
+        likes: 5
+      })
+      await addedBlog.save()
+    })
+
+    test('succeeds with proper statuscode', async () => {
+      const blogsAtStart = await blogsInDb()
+
+      await api
+        .delete(`/api/blogs/${addedBlog._id}`)
+        .expect(204)
+
+      const blogsAfterOperation = await blogsInDb()
+
+      const titles = blogsAfterOperation.map(b => b.title)
+
+      expect(titles).not.toContain(addedBlog.title)
+      expect(blogsAfterOperation.length).toBe(blogsAtStart.length - 1)
     })
   })
 
