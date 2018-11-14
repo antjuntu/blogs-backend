@@ -177,6 +177,46 @@ describe('when there is initially some blogs saved', async () => {
       const usernames = usersAfterOperation.map(u => u.username)
       expect(usernames).toContain(newUser.username)
     })
+
+    test('POST /api/users fails with proper statuscode and message if username already taken', async () => {
+      const usersBeforeOperation = await usersInDb()
+
+      const newUser = {
+        username: 'root',
+        name: 'Superuser',
+        password: 'salainen'
+      }
+
+      const result = await api
+        .post('/api/users')
+        .send(newUser)
+        .expect(400)
+        .expect('Content-Type', /application\/json/)
+
+      expect(result.body).toEqual({ error: 'username must be unique' })
+      const usersAfterOperation = await usersInDb()
+      expect(usersAfterOperation.length).toBe(usersBeforeOperation.length)
+    })
+
+    test('password length must be at least 3', async () => {
+      const usersBeforeOperation = await usersInDb()
+
+      const newUser = {
+        username: 'Kekkonen',
+        name: 'Urho Kaleva Kekkonen',
+        password: 'sa'
+      }
+
+      const result = await api
+        .post('/api/users')
+        .send(newUser)
+        .expect(400)
+        .expect('Content-Type', /application\/json/)
+
+      expect(result.body).toEqual({ error: 'password length must be at least 3' })
+      const usersAfterOperation = await usersInDb()
+      expect(usersAfterOperation.length).toBe(usersBeforeOperation.length)
+    })
   })
 
   afterAll(() => {
