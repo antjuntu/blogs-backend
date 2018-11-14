@@ -5,5 +5,5 @@ Content-Type: application/json
   "title": "Blogin otsikko",
   "author": "Antti Juntunen",
   "url": "http://www.blogi.com/eka",
-  "likes": 2009
+  "likes": 111
 }
