@@ -3,7 +3,7 @@ Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InVya2tpIiwiaWQiOiI1YmVjNWYwN2IxMjk1MTM3MDRjMjg1ZDQiLCJpYXQiOjE1NDIzNzI1Njl9._xiTmAhJDDRAf8XEJPjv7smgWY3r-57t_zceW7XdZIc
 
 {
-  "title": "Kirjautunut käyttäjä",
+  "title": "Kirjautunut käyttäjä 3",
   "author": "Paavo Väyrynen",
   "url": "http://www.blogi.com/toka",
   "likes": 3
